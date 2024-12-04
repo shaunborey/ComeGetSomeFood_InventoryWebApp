@@ -1,0 +1,36 @@
+C:\Users\Shaun\Documents\Visual Studio 2013\Projects\CGSF_InventoryWebApp\CGSF_InventoryWebApp\bin\CGSF_InventoryWebApp.dll.config
+C:\Users\Shaun\Documents\Visual Studio 2013\Projects\CGSF_InventoryWebApp\CGSF_InventoryWebApp\bin\CGSF_InventoryWebApp.dll
+C:\Users\Shaun\Documents\Visual Studio 2013\Projects\CGSF_InventoryWebApp\CGSF_InventoryWebApp\bin\CGSF_InventoryWebApp.pdb
+C:\Users\Shaun\Documents\Visual Studio 2013\Projects\CGSF_InventoryWebApp\CGSF_InventoryWebApp\bin\System.Net.Http.Formatting.dll
+C:\Users\Shaun\Documents\Visual Studio 2013\Projects\CGSF_InventoryWebApp\CGSF_InventoryWebApp\bin\System.Web.Http.dll
+C:\Users\Shaun\Documents\Visual Studio 2013\Projects\CGSF_InventoryWebApp\CGSF_InventoryWebApp\bin\System.Web.Http.WebHost.dll
+C:\Users\Shaun\Documents\Visual Studio 2013\Projects\CGSF_InventoryWebApp\CGSF_InventoryWebApp\bin\System.Net.Http.Formatting.xml
+C:\Users\Shaun\Documents\Visual Studio 2013\Projects\CGSF_InventoryWebApp\CGSF_InventoryWebApp\bin\System.Web.Http.xml
+C:\Users\Shaun\Documents\Visual Studio 2013\Projects\CGSF_InventoryWebApp\CGSF_InventoryWebApp\bin\System.Web.Http.WebHost.xml
+C:\Users\Shaun\Documents\Visual Studio 2013\Projects\CGSF_InventoryWebApp\CGSF_InventoryWebApp\obj\Debug\CGSF_InventoryWebApp.csprojResolveAssemblyReference.cache
+C:\Users\Shaun\Documents\Visual Studio 2013\Projects\CGSF_InventoryWebApp\CGSF_InventoryWebApp\obj\Debug\CGSF_InventoryWebApp.dll
+C:\Users\Shaun\Documents\Visual Studio 2013\Projects\CGSF_InventoryWebApp\CGSF_InventoryWebApp\obj\Debug\CGSF_InventoryWebApp.pdb
+C:\Users\Shaun\Documents\Code Samples\SampleProjects\SampleProjects\ComeGetSomeFood_InventoryWebApp\CGSF_InventoryWebApp\CGSF_InventoryWebApp\bin\CGSF_InventoryWebApp.dll.config
+C:\Users\Shaun\Documents\Code Samples\SampleProjects\SampleProjects\ComeGetSomeFood_InventoryWebApp\CGSF_InventoryWebApp\CGSF_InventoryWebApp\bin\CGSF_InventoryWebApp.dll
+C:\Users\Shaun\Documents\Code Samples\SampleProjects\SampleProjects\ComeGetSomeFood_InventoryWebApp\CGSF_InventoryWebApp\CGSF_InventoryWebApp\bin\CGSF_InventoryWebApp.pdb
+C:\Users\Shaun\Documents\Code Samples\SampleProjects\SampleProjects\ComeGetSomeFood_InventoryWebApp\CGSF_InventoryWebApp\CGSF_InventoryWebApp\bin\System.Net.Http.Formatting.dll
+C:\Users\Shaun\Documents\Code Samples\SampleProjects\SampleProjects\ComeGetSomeFood_InventoryWebApp\CGSF_InventoryWebApp\CGSF_InventoryWebApp\bin\System.Web.Http.dll
+C:\Users\Shaun\Documents\Code Samples\SampleProjects\SampleProjects\ComeGetSomeFood_InventoryWebApp\CGSF_InventoryWebApp\CGSF_InventoryWebApp\bin\System.Web.Http.WebHost.dll
+C:\Users\Shaun\Documents\Code Samples\SampleProjects\SampleProjects\ComeGetSomeFood_InventoryWebApp\CGSF_InventoryWebApp\CGSF_InventoryWebApp\bin\System.Net.Http.Formatting.xml
+C:\Users\Shaun\Documents\Code Samples\SampleProjects\SampleProjects\ComeGetSomeFood_InventoryWebApp\CGSF_InventoryWebApp\CGSF_InventoryWebApp\bin\System.Web.Http.xml
+C:\Users\Shaun\Documents\Code Samples\SampleProjects\SampleProjects\ComeGetSomeFood_InventoryWebApp\CGSF_InventoryWebApp\CGSF_InventoryWebApp\bin\System.Web.Http.WebHost.xml
+C:\Users\Shaun\Documents\Code Samples\SampleProjects\SampleProjects\ComeGetSomeFood_InventoryWebApp\CGSF_InventoryWebApp\CGSF_InventoryWebApp\obj\Debug\CGSF_InventoryWebApp.csprojResolveAssemblyReference.cache
+C:\Users\Shaun\Documents\Code Samples\SampleProjects\SampleProjects\ComeGetSomeFood_InventoryWebApp\CGSF_InventoryWebApp\CGSF_InventoryWebApp\obj\Debug\CGSF_InventoryWebApp.dll
+C:\Users\Shaun\Documents\Code Samples\SampleProjects\SampleProjects\ComeGetSomeFood_InventoryWebApp\CGSF_InventoryWebApp\CGSF_InventoryWebApp\obj\Debug\CGSF_InventoryWebApp.pdb
+C:\Users\sbore\Documents\SNHU Homework\Portfolio Planning (16EW5)\Artifacts\Outside Projects\ComeGetSomeFood_InventoryWebApp\CGSF_InventoryWebApp\CGSF_InventoryWebApp\bin\CGSF_InventoryWebApp.dll.config
+C:\Users\sbore\Documents\SNHU Homework\Portfolio Planning (16EW5)\Artifacts\Outside Projects\ComeGetSomeFood_InventoryWebApp\CGSF_InventoryWebApp\CGSF_InventoryWebApp\bin\CGSF_InventoryWebApp.dll
+C:\Users\sbore\Documents\SNHU Homework\Portfolio Planning (16EW5)\Artifacts\Outside Projects\ComeGetSomeFood_InventoryWebApp\CGSF_InventoryWebApp\CGSF_InventoryWebApp\bin\CGSF_InventoryWebApp.pdb
+C:\Users\sbore\Documents\SNHU Homework\Portfolio Planning (16EW5)\Artifacts\Outside Projects\ComeGetSomeFood_InventoryWebApp\CGSF_InventoryWebApp\CGSF_InventoryWebApp\bin\System.Net.Http.Formatting.dll
+C:\Users\sbore\Documents\SNHU Homework\Portfolio Planning (16EW5)\Artifacts\Outside Projects\ComeGetSomeFood_InventoryWebApp\CGSF_InventoryWebApp\CGSF_InventoryWebApp\bin\System.Web.Http.dll
+C:\Users\sbore\Documents\SNHU Homework\Portfolio Planning (16EW5)\Artifacts\Outside Projects\ComeGetSomeFood_InventoryWebApp\CGSF_InventoryWebApp\CGSF_InventoryWebApp\bin\System.Web.Http.WebHost.dll
+C:\Users\sbore\Documents\SNHU Homework\Portfolio Planning (16EW5)\Artifacts\Outside Projects\ComeGetSomeFood_InventoryWebApp\CGSF_InventoryWebApp\CGSF_InventoryWebApp\bin\System.Net.Http.Formatting.xml
+C:\Users\sbore\Documents\SNHU Homework\Portfolio Planning (16EW5)\Artifacts\Outside Projects\ComeGetSomeFood_InventoryWebApp\CGSF_InventoryWebApp\CGSF_InventoryWebApp\bin\System.Web.Http.xml
+C:\Users\sbore\Documents\SNHU Homework\Portfolio Planning (16EW5)\Artifacts\Outside Projects\ComeGetSomeFood_InventoryWebApp\CGSF_InventoryWebApp\CGSF_InventoryWebApp\bin\System.Web.Http.WebHost.xml
+C:\Users\sbore\Documents\SNHU Homework\Portfolio Planning (16EW5)\Artifacts\Outside Projects\ComeGetSomeFood_InventoryWebApp\CGSF_InventoryWebApp\CGSF_InventoryWebApp\obj\Debug\CGSF_InventoryWebApp.csprojResolveAssemblyReference.cache
+C:\Users\sbore\Documents\SNHU Homework\Portfolio Planning (16EW5)\Artifacts\Outside Projects\ComeGetSomeFood_InventoryWebApp\CGSF_InventoryWebApp\CGSF_InventoryWebApp\obj\Debug\CGSF_InventoryWebApp.dll
+C:\Users\sbore\Documents\SNHU Homework\Portfolio Planning (16EW5)\Artifacts\Outside Projects\ComeGetSomeFood_InventoryWebApp\CGSF_InventoryWebApp\CGSF_InventoryWebApp\obj\Debug\CGSF_InventoryWebApp.pdb

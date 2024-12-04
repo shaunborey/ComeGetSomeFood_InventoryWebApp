@@ -1,0 +1,310 @@
+﻿@model CGSF_InventoryWebApp.Models.InventoryModel
+@using GridMvc.Html
+
+@{
+    ViewBag.Title = "Item Ordering";
+}
+
+@if (Model.ShowPrintView)
+{
+    <style type="text/css">
+        @@media print {
+            body * {
+                display: none;
+            }
+
+            .printable, .printable * {
+                visibility: visible;
+            }
+
+            .printable {
+                position: absolute;
+                left: 0;
+                top: 0;
+                font-size: 1.2em;
+            }
+        }
+    </style>
+    
+    <script>
+
+        $(document).ready(function () {
+            $("#printModal").modal("show");
+        });
+
+        function Print() {
+            var newWindow = window.open("", "_blank", "height=400,width=600,menubar=no,titlebar=no,toolbar=no");
+            newWindow.document.write($(".printable").html());
+            newWindow.print();
+            newWindow.close();
+        }
+
+    </script>
+    <div class="modal fade" id="printModal">
+        <div class="modal-dialog modal-2xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Order Details</h4>
+                </div>
+                <div class="modal-body printable">
+                    <pre>                     
+                         @Html.Raw(Model.PrintFileString)
+                    </pre>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="javascript:Print()">Print</button>                    
+                </div>
+            </div>
+        </div>
+    </div>
+ </div>
+}
+
+
+
+
+    
+<div>
+    <p>This tool will auto-generate an inventory order based upon current item quantities and order thresholds.</p>
+</div>
+
+@using (Html.BeginForm("Orders", "Home", FormMethod.Post, new { id = "orderForm" }))
+{
+
+    <div id="closeOrderModal" class="modal fade in">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Confirm Order Close</h3>
+                </div>
+                <div class="modal-body modalForm">
+                    <div>
+                        <input type="hidden" id="hdnCloseOrderID" name="hdnCloseOrderID" value="" />
+                        <p class="alert alert-warning">
+                            Are you sure that you want to close this order and update
+                            all order item quantities?
+                        </p>
+                        @Html.CheckBox("chbxCloseOnly", false)
+                        @Html.Label("CLOSE ORDER BUT DO NOT UPDATE ITEM QUANTITIES")
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="btn btn-danger btn-sm" data-dismiss="modal">CANCEL</a>
+                    <button class="btn btn-success btn-sm" onclick="FormSubmit('/Orders/CloseOrder', 'orderForm', false)">CLOSE ORDER</button>
+                    <button id="orderFormSubmit" type="submit" hidden="hidden"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <h1>Item Ordering</h1>
+
+
+    <div id="editModal" class="modal fade in">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Edit Item</h3>
+                    @if (Model.IsError)
+                    {
+                        <span class="alert alert-danger">@Model.Message</span>
+                    }
+                </div>
+                <div class="modal-body modalForm">
+                    <input type="hidden" id="editItemID" name="editItemID" />
+                    <h4>Modify Order Quantity:</h4>
+                    <div>
+                        <span>SKU: </span>
+                        <span id="editSKU"></span>
+                    </div>
+                    <div>
+                        <span>Brand: </span>
+                        <span id="editBrand"></span>
+                    </div>
+                    <div>
+                        <span>Description: </span>
+                        <span id="editDescription"></span>
+                    </div>
+                    <div>
+                        <span>Order Qty: </span>
+                        <input type="number" id="editOrderQty" name="editOrderQty" required="required" min="0" max="9999" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="btn btn-danger btn-sm" data-dismiss="modal">CANCEL</a>
+                    <button class="btn btn-success btn-sm" onclick="FormSubmit('/Orders/EditOrderItem', 'orderForm', true)">SUBMIT</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="orderHistoryModal" class="modal fade in">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Order History</h3>
+                </div>
+                <div class="modal-body modalForm">
+                    @if (Model.IsError && !Model.ShowErrorModal)
+                    { 
+                        <div>
+                            <span class="alert alert-danger">@Model.Message</span>
+                        </div>
+                    }
+                    <div>
+                        @Html.Grid(Model.OrderHistoryGrid).Columns(columns =>
+                                {
+                                    columns.Add(o => o.OrderDate).Titled("Order Date").SetWidth("5%");
+                                    columns.Add(o => o.OrderNotes).Titled("Order Notes").SetWidth("10%");
+                                    columns.Add(o => o.OrderTotal).Titled("Order Total").SetWidth("3%").RenderValueAs(o => String.Format("{0:C}", o.OrderTotal));
+                                    columns.Add().SetWidth("10%").Encoded(false).Sanitized(false).RenderValueAs(o => { if (o.IsOpen) return "<button class='btn btn-info' id='btnClose_" + o.OrderID + "' data-toggle='modal' data-target='#closeOrderModal' data-orderid='" + o.OrderID + "'>Close</button>"; else return "<button class='btn' disabled='disabled'>Closed</button>"; });
+                                 }).WithPaging(5).Selectable(false)
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="btn btn-danger btn-sm" data-dismiss="modal">CLOSE</a>
+                </div>
+            </div>
+        </div>
+    </div>  
+    
+    <div id="orderMainSection" class="row">
+    <div id="orderSubsection1" class="pageSection col-md-6">
+        @{
+            string disabled = Model.CurrentOrder.OrderItems.Count == 0 ? "disabled = 'disabled'" : "";
+        }
+        @Html.TextAreaFor(item => item.CurrentOrder.OrderNotes)
+        <button type="button" class="btn btn-default btn-sm" onclick="FormSubmit('/Orders/GetOrder', 'orderForm', false)">Generate Order</button>   
+        <button type="button" class="btn btn-success btn-sm" onclick="FormSubmit('/Orders/SubmitOrder', 'orderForm', false)" @disabled >Process Order</button>  
+        <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#orderHistoryModal">View Order History</button>    
+    </div>
+    <div id="orderSubsection2" class="pageSection col-md-3">
+        @{            
+            var selectedItems = from i in Model.CurrentOrder.OrderItems
+                    where i.IsSelected == true
+                    select i;
+            int totalItems = selectedItems.Count();
+            double orderCostTotal = selectedItems.Sum(item => item.OnOrderQty * item.UnitCost);
+
+            <input type="hidden" id="orderCostTotal" value="@orderCostTotal" />
+            <input type="hidden" id="itemTotal" value="@totalItems" />
+            <input type="hidden" id="initialPageTotal" />
+        }
+
+        <h3>Total Items: <span id="spnTotalItems" title="@totalItems">@totalItems</span></h3>
+    </div>
+    <div id="createOrder3Subsection3" class="pageSection col-md-3">
+        <h3>Order Total: <span id="spnOrderCostTotal" title="@orderCostTotal">@String.Format("{0:C}", orderCostTotal)</span></h3>
+    </div>
+</div>
+
+@Html.Grid(Model.OrderGrid).Columns(columns =>
+        {
+            columns.Add(item => item.IsSelected).Titled("Select All<br />" + Html.CheckBox("chbxSelectAll", false, new { onchange = "SelectAll()" }).ToHtmlString()).SetWidth("2%").Encoded(false).Sanitized(false).RenderValueAs(item => Html.CheckBox("ckbxIsSelected." + item.ItemID, item.IsSelected, new { @class = "itemChkBx", onchange = "UpdateOrderTotals()" }));
+            columns.Add().Encoded(false).Sanitized(false).SetWidth("3%").RenderValueAs(o => @<button type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#editModal" data-item="@o.ItemID" data-sku="@o.SKU" data-brand="@o.Brand" data-desc="@o.Description" data-orderqty="@o.OnOrderQty">EDIT</button>);
+            columns.Add(item => item.SKU).Titled("SKU<br />&nbsp;").SetWidth("5%").Sortable(true).Filterable(true);
+            columns.Add(item => item.Brand).Titled("Brand<br />&nbsp;").SetWidth("5%").Sortable(true).Filterable(true);
+            columns.Add(item => item.Description).Titled("Description<br />&nbsp;").SetWidth("10%").Sortable(true).Filterable(true);
+            columns.Add(item => item.OnOrderQty).Titled("Order<br />Qty").SetWidth("3%");
+            columns.Add(item => item.UnitCost).Titled("Unit<br />Cost").SetWidth("5%").Sortable(true).Filterable(true);
+            columns.Add().Titled("Line<br />Cost").SetWidth("5%").Encoded(false).Sanitized(false).RenderValueAs(v => String.Format("<span id='spnItemCostTotal_{0}' class='itemcost' title='{1}'>{1:C}</span>", v.ItemID, (v.OnOrderQty * v.UnitCost)));
+        }).WithPaging(5).WithMultipleFilters()
+    
+    foreach (var item in Model.CurrentOrder.OrderItems)
+    {
+        <input type="hidden" id="hdnIsSelected.@item.ItemID" name="hdnIsSelected.@item.ItemID" value="@item.IsSelected" />
+        <input type="hidden" id="hdnOrderQty.@item.ItemID" name="hdnOrderQty.@item.ItemID" value="@item.OnOrderQty" />        
+    }
+   
+}
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        //Calculate initial total of all items currently displayed and set to hidden field value
+        var initialPageTotal = 0.00;
+        $(".itemcost").each(function () {
+            initialPageTotal = initialPageTotal + parseFloat($(this).prop("title"));
+        });
+        $("#initialPageTotal").val(initialPageTotal);
+
+        //Set grid sort links to be passed to FormPost function
+        $(".grid-header-title a").each(function () {
+            var sortQS = $(this).attr("href");
+            $(this).attr("href", "javascript:FormSubmit('/Orders" + sortQS + "', 'orderForm', false)");
+        });
+
+        //Set grid pagination links to be passed to FormPost function
+        $(".pagination a").each(function () {
+            var pageQS = $(this).attr("href");
+            $(this).attr("href", "javascript:FormSubmit('/Orders" + pageQS + "', 'orderForm', false)");
+        });
+
+        //Set grid filtering to pass through FormPost function
+        $(".grid-mvc").each(function () {
+            $(this).attr("data-formpost", "orderForm");
+        });
+    })
+
+    $('#editModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var itemID = button.data('item');
+        var sku = button.data('sku');
+        var brand = button.data('brand');
+        var description = button.data('desc');
+        var orderQty = button.data('orderqty');
+        var modal = $(this);
+        modal.find('#editItemID').val(itemID);
+        modal.find('#editSKU').html(sku);
+        modal.find('#editBrand').html(brand);
+        modal.find('#editDescription').html(description);
+        modal.find('#editOrderQty').val(orderQty);
+    });
+
+    $('#closeOrderModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var orderID = button.data('orderid');
+        var modal = $(this);
+        modal.find('#hdnCloseOrderID').val(orderID);
+        $('#orderHistoryModal').modal('hide');
+    });
+
+    $('#printModal').on('hide.bs.modal', function (event) {
+        FormSubmit('/Orders', 'orderForm', false);
+    })
+
+    function SelectAll() {
+        if ($("#chbxSelectAll").prop("checked")) {
+            $(".itemChkBx").prop("checked", true);
+        } else {
+            $(".itemChkBx").prop("checked", false);
+        }
+        UpdateOrderTotals();
+    }
+
+    function UpdateOrderTotals() {
+        var totalItems = parseInt($("#itemTotal").val());
+        var initialOrderCostTotal = parseFloat($("#orderCostTotal").val());
+        var initialPageTotal = parseFloat($("#initialPageTotal").val());
+        var currentOrderCostTotal = initialOrderCostTotal - initialPageTotal;
+        var currentPageTotal = 0.00;
+
+        $(".itemcost").each(function () {
+            currentPageTotal = currentPageTotal + parseFloat($(this).prop("title"));
+        });
+        currentOrderCostTotal = currentOrderCostTotal + currentPageTotal;
+
+        $(".itemChkBx").each(function () {
+            if (!$(this).prop("checked")) {
+                var itemNum = ($(this).prop("id")).substring(15);
+                totalItems = totalItems - 1;
+                currentOrderCostTotal = currentOrderCostTotal - parseFloat($("#spnItemCostTotal_" + itemNum).prop("title"));
+            }
+        });
+        $("#spnTotalItems").prop("title", totalItems).html(totalItems);
+        $("#spnOrderCostTotal").prop("title", currentOrderCostTotal).html("$" + currentOrderCostTotal.toFixed(2));
+    }
+
+</script>

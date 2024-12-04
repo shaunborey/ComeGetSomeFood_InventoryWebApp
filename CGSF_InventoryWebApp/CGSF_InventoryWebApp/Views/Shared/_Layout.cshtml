@@ -1,0 +1,184 @@
+﻿@model CGSF_InventoryWebApp.Models.BaseModel
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Come Get Some Food</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/gridmvc")
+    @RenderSection("scripts", required: false)
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div id="modalSuccess" class="modal fade in">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Success!</h3>                    
+                </div>
+                <div class="modal-body">
+                    <span class="success">@Model.Message</span>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="btn" data-dismiss="modal">OK</a>                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalError" class="modal fade in">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Error!</h3>
+                </div>
+                <div class="modal-body">
+                    <span class="danger">@Model.Message</span>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="btn" data-dismiss="modal">OK</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <div class="navLogo">
+                    <h3>Come Get Some Food!</h3>
+                    <h5>INVENTORY MANAGEMENT PORTAL</h5>
+                </div>
+            </div>
+@{
+        bool isAuthorized = Session["UID"] != null;
+        if (isAuthorized)
+        {
+            <div id="authView" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>&nbsp;</li>
+                    <li>@Html.ActionLink("Orders", "Orders", "Home")</li>
+                    <li>@Html.ActionLink("Inventory", "Inventory", "Home")</li>
+                    @if (Model.CurrentUser.Type == CGSFEntityLib.User.UserType.Owner)
+                    {
+                    <li><a href="#" onclick="openModal('adduser')">Add New User</a></li>
+                    }
+                </ul>
+                <div style="float:right; color:gray;">
+                    <h6>Welcome @Model.CurrentUser.FirstName!</h6>
+                    <p><a href="/ProcessUser/Logout">Logout</a> </p>
+                </div>
+            </div>
+        }
+        else
+        { 
+            <div id="anonView" class="navbar-collapse collapse">
+                <div style="float:right; color:gray;">
+                    <h6>Welcome Guest!</h6>
+                </div>
+            </div>
+        }
+}
+        </div>
+    </div>
+        
+    <div id="adduser" class="modal fade in">
+        @{Html.RenderPartial("_AddUser", new CGSF_InventoryWebApp.Models.UserModel(Model.CurrentUser));}
+    </div>
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Come Get Some Food</p>
+        </footer>
+    </div>
+
+
+    @if (Model.IsSuccess)
+    {
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#modalSuccess").modal({ show: true });
+            });
+        </script>
+    }
+    
+    @if (Model.IsError)
+    {
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#modalError").modal({ show: true });
+            });
+        </script>
+    }
+    
+    @{
+        string urlPrefix = Url.Content("~/");
+    }
+
+    <script type="text/javascript">
+        
+        function URLPrefix() {
+            var urlPrefix = '@urlPrefix';
+
+            if (urlPrefix === "/") {
+                return "";
+            }
+            else {
+                return urlPrefix;
+            }
+        }
+        function openModal(type) {
+            $("#" + type).modal({ show: true });
+        }
+
+        function FormSubmit(qs, formid, isValidated) {
+            if (!isValidated)
+            {
+                $("#" + formid).attr("novalidate", "novalidate");
+            }
+            $("#" + formid).attr("action", URLPrefix() + qs);
+            $("#" + formid + "Submit").click();
+        }
+    </script>
+@if (Model.IsSuccess)
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#modalSuccess").modal({ show: true });
+        });
+    </script>
+}
+
+@if (Model.IsError)
+{
+    if (Model.ShowErrorModal)
+    {
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#modalError").modal({ show: true });
+            });
+        </script>
+    }
+    else
+    {
+        <script type="text/javascript">
+            $(document).ready(function () {
+            $("#@Model.ModalType").modal({ show: true });
+            });
+        </script>
+    }
+}
+
+
+
+</body>
+</html>

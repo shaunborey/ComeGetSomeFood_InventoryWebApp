@@ -1,0 +1,9 @@
+C:\Users\Shaun\Documents\Visual Studio 2013\Projects\CGSFEntityLib\CGSFEntityLib\bin\Release\CGSFEntityLib.dll
+C:\Users\Shaun\Documents\Visual Studio 2013\Projects\CGSFEntityLib\CGSFEntityLib\bin\Release\CGSFEntityLib.pdb
+C:\Users\Shaun\Documents\Visual Studio 2013\Projects\CGSFEntityLib\CGSFEntityLib\obj\Release\CGSFEntityLib.dll
+C:\Users\Shaun\Documents\Visual Studio 2013\Projects\CGSFEntityLib\CGSFEntityLib\obj\Release\CGSFEntityLib.pdb
+C:\Users\Shaun\Documents\Visual Studio 2013\Projects\CGSFEntityLib\CGSFEntityLib\obj\Release\CGSFEntityLib.csprojResolveAssemblyReference.cache
+C:\Users\Shaun\Documents\Code Samples\SampleProjects\SampleProjects\ComeGetSomeFood_InventoryWebApp\CGSFEntityLib\CGSFEntityLib\bin\Release\CGSFEntityLib.dll
+C:\Users\Shaun\Documents\Code Samples\SampleProjects\SampleProjects\ComeGetSomeFood_InventoryWebApp\CGSFEntityLib\CGSFEntityLib\bin\Release\CGSFEntityLib.pdb
+C:\Users\Shaun\Documents\Code Samples\SampleProjects\SampleProjects\ComeGetSomeFood_InventoryWebApp\CGSFEntityLib\CGSFEntityLib\obj\Release\CGSFEntityLib.dll
+C:\Users\Shaun\Documents\Code Samples\SampleProjects\SampleProjects\ComeGetSomeFood_InventoryWebApp\CGSFEntityLib\CGSFEntityLib\obj\Release\CGSFEntityLib.pdb

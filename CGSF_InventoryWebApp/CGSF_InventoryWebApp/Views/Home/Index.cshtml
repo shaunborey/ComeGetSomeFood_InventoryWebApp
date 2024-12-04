@@ -1,0 +1,37 @@
+﻿@model CGSF_InventoryWebApp.Models.UserModel
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+@using (Html.BeginForm("ProcessUser", "Home", FormMethod.Post, new { id = "loginForm", @class = "form-horizontal"}))
+{
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+
+            <h3>User Login</h3>
+            @if (Model.IsError)
+            { 
+            <div class="alert alert-danger">@Model.Message</div>
+            }
+        </div>
+
+        <div class="modal-body loginform">
+            <div class="form-group">
+                @Html.LabelFor(model => model.CurrentUser.UserName)
+                @Html.TextBoxFor(model => model.CurrentUser.UserName)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.CurrentUser.Password)
+                @Html.TextBoxFor(model => model.CurrentUser.Password, new { type = "password" })
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#" class="btn btn-danger btn-sm" data-dismiss="modal">CANCEL</a>
+            <button class="btn btn-success btn-sm" onclick="FormSubmit('/ProcessUser/Login', 'loginForm', false)">LOGIN</button>
+            <button id="loginFormSubmit" type="submit" hidden="hidden"></button>
+        </div>
+    </div>
+</div>
+}

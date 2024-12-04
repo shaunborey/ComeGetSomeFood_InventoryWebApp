@@ -1,0 +1,277 @@
+﻿@model CGSF_InventoryWebApp.Models.InventoryModel
+@using GridMvc.Html
+
+@{
+    ViewBag.Title = "All Inventory Items";
+}
+
+<h1>All Inventory</h1>
+
+<div id="modalSuccess" class="modal fade in">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Success!</h3>
+            </div>
+            <div class="modal-body">
+                <span class="alert alert-success">@Model.Message</span>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn" data-dismiss="modal">OK</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalError" class="modal fade in">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Error!</h3>
+            </div>
+            <div class="modal-body">
+                <span class="alert alert-danger">@Model.Message</span>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn" data-dismiss="modal">OK</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@using (Html.BeginForm("Inventory", "Home", FormMethod.Post, new { id = "addItemForm"}))
+{ 
+    <div id="newItemModal" class="modal fade in">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Add New Item</h3>
+                    @if (Model.IsError)
+                    { 
+                        <span class="alert alert-danger">@Model.Message</span>
+                    }
+                </div>
+                <div class="modal-body modalForm">
+
+                    <h4>Enter Item Information:</h4>
+                    <div>
+                        @Html.LabelFor(model => model.NewItem.SKU)
+                        @Html.TextBoxFor(model => model.NewItem.SKU, new { required = "required" })
+                    </div>
+                    <div>
+                        @Html.LabelFor(model => model.NewItem.Brand)
+                        @Html.TextBoxFor(model => model.NewItem.Brand, new { required = "required" })
+                    </div>
+                    <div>
+                        @Html.LabelFor(model => model.NewItem.Description)
+                        @Html.TextBoxFor(model => model.NewItem.Description, new { required = "required" })
+                    </div>
+                    <div>
+                        @Html.LabelFor(model => model.NewItem.CurrentQty)
+                        @Html.TextBoxFor(model => model.NewItem.CurrentQty, new { type = "number", min = "0", max = "9999", required = "required" })
+                    </div>
+                    <div>
+                        @Html.LabelFor(model => model.NewItem.MaxQty)
+                        @Html.TextBoxFor(model => model.NewItem.MaxQty, new { type = "number", min = "0", max = "9999", required = "required" })
+                    </div>
+                    <div>
+                        @Html.LabelFor(model => model.NewItem.OrderThreshold)
+                        @Html.TextBoxFor(model => model.NewItem.OrderThreshold, new { type = "number", min = "0", max = "9999", required = "required" })
+                    </div>
+                    <div>
+                        @Html.LabelFor(model => model.NewItem.UnitCost)
+                        $@Html.TextBoxFor(model => model.NewItem.UnitCost, "{0:0.00}", new { required = "required", pattern=@"\d+(\.\d{2})?" })
+                    </div>
+                    <div>
+                        @Html.LabelFor(model => model.NewItem.RetailPrice)
+                        $@Html.TextBoxFor(model => model.NewItem.RetailPrice, "{0:0.00}", new { required = "required", pattern=@"\d+(\.\d{2})?" })
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="btn btn-danger btn-sm" data-dismiss="modal">CANCEL</a>
+                    <button class="btn btn-success btn-sm" onclick="FormSubmit('/Inventory/AddItem', 'addItemForm', true)">SUBMIT</button>
+                    <button type="submit" hidden="hidden" id="addItemFormSubmit"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@using (Html.BeginForm("Inventory", "Home", FormMethod.Post, new { id="inventoryForm"}))
+{ 
+
+    <div id="editModal" class="modal fade in">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Edit Item</h3>
+                    @if (Model.IsError)
+                    {
+                        <span class="alert alert-danger">@Model.Message</span>
+                    }
+                </div>
+                <div class="modal-body modalForm">
+                    <input type="hidden" id="editItemID" name="editItemID" />
+                    <h4>Enter Item Information:</h4>
+                    <div>
+                        <span>SKU: </span>
+                        <input type="text" id="editSKU" name="editSKU" required="required" />
+                    </div>
+                    <div>
+                        <span>Brand: </span>
+                        <input type="text" id="editBrand" name="editBrand" required="required" />
+                    </div>
+                    <div>
+                        <span>Description: </span>
+                        <input type="text" id="editDescription" name="editDescription" required="required" />
+                    </div>
+                    <div>
+                        <span>Current Qty: </span>
+                        <input type="number" id="editCurrentQty" name="editCurrentQty" min="0" max="9999" required="required" />
+                    </div>
+                    <div>
+                        <span>Max Qty: </span>
+                        <input type="number" id="editMaxQty" name="editMaxQty" min="0" max="9999" required="required" />
+                    </div>
+                    <div>
+                        <span>Order Threshold: </span>
+                        <input type="number" id="editOrderThreshold" name="editOrderThreshold" min="0" max="9999" required="required" />
+                    </div>
+                    <div>
+                        <span>Unit Cost: </span>
+                        $<input type="text" id="editUnitCost" name="editUnitCost" required="required" pattern="\d+(\.\d{2})?" />
+                    </div>
+                    <div>
+                        <span>Retail Price: </span>
+                        $<input type="text" id="editRetailPrice" name="editRetailPrice" required="required" pattern="\d+(\.\d{2})?" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="btn btn-danger btn-sm" data-dismiss="modal">CANCEL</a>
+                    <button class="btn btn-success btn-sm" onclick="FormSubmit('/Inventory/EditItem', 'inventoryForm', true)">SUBMIT</button>
+                    <button id="inventoryFormSubmit" type="submit" hidden="hidden"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="deleteModal" class="modal fade in">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Delete Item</h3>
+            </div>
+            <div class="modal-body">
+                <h4 class="alert alert-danger">Are you sure you want to delete the following item?</h4>
+                <h6>(This cannot be undone!)</h6>
+                <div style="margin-top:15px;">
+                    <input type="hidden" id="deleteItemID" name="deleteItemID" />
+                    <span id="deleteSKU"></span><br />
+                    <span id="deleteBrand"></span><br />
+                    <span id="deleteDescription"></span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" onclick="FormSubmit('/Inventory/DeleteItem', 'inventoryForm', false)">DELETE ITEM</button>
+                <a href="#" class="btn btn-default" data-dismiss="modal">CANCEL</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <button class="btn btn-default btn-sm" data-toggle="modal" data-target="#newItemModal">Add New Item</button>
+@Html.Grid(Model.ItemGrid).Columns(columns =>
+        {
+            if (Model.CurrentUser.Type == CGSFEntityLib.User.UserType.Owner)
+            { 
+            columns.Add().Encoded(false).Sanitized(false).SetWidth("3%").RenderValueAs(o => @<button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#deleteModal" data-item="@o.ItemID" data-sku="@o.SKU" data-brand="@o.Brand" data-desc="@o.Description">DELETE</button>);
+            }
+            columns.Add().Encoded(false).Sanitized(false).SetWidth("3%").RenderValueAs(o => @<button type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#editModal" data-item="@o.ItemID" data-sku="@o.SKU" data-brand="@o.Brand" data-desc="@o.Description" data-currqty="@o.CurrentQty" data-maxqty="@o.MaxQty" data-thresh="@o.OrderThreshold" data-cost="@o.UnitCost" data-retail="@o.RetailPrice">EDIT</button>);
+            columns.Add(item => item.SKU).Titled("SKU<br />&nbsp;").SetWidth("5%").Sortable(true).Filterable(true);
+            columns.Add(item => item.Brand).Titled("Brand<br />&nbsp;").SetWidth("10%").Sortable(true).Filterable(true);
+            columns.Add(item => item.Description).Titled("Description<br />&nbsp;").SetWidth("10%").Sortable(true).Filterable(true);
+            columns.Add(item => item.CurrentQty).Titled("Current<br />Qty").SetWidth("3%");
+            columns.Add(item => item.OnOrderQty).Titled("Qty On<br />Order").SetWidth("3%");
+            columns.Add(item => item.MaxQty).Titled("Max<br />Qty").SetWidth("3%");
+            columns.Add(item => item.DateLastReceived).Titled("Date Last<br />Received").SetWidth("10%").Sortable(true).Filterable(true);
+            columns.Add(item => item.QtyLastReceived).Titled("Qty Last<br />Received").SetWidth("3%");
+            columns.Add(item => item.UnitCost).Titled("Unit<br />Cost").SetWidth("5%").Sortable(true).Filterable(true).Encoded(false).Sanitized(false).RenderValueAs(o => String.Format("{0:0.00}",o.UnitCost));
+            columns.Add(item => item.RetailPrice).Titled("Retail<br />Price").SetWidth("5%").Sortable(true).Filterable(true).Encoded(false).Sanitized(false).RenderValueAs(o => String.Format("{0:0.00}", o.RetailPrice));
+            columns.Add(item => item.DateCreated).Titled("Date<br />Created").SetWidth("10%").Sortable(true).Filterable(true);
+            columns.Add(item => item.CreatedBy).Titled("Created<br />By").SetWidth("5%").Sortable(true).Filterable(true);
+            columns.Add(item => item.DateLastModified).Titled("Date Last<br />Modified").SetWidth("10%").Sortable(true).Filterable(true);
+            columns.Add(item => item.LastModifiedBy).Titled("Last<br />Modified By").SetWidth("10%").Sortable(true).Filterable(true); 
+        }).WithPaging(5).WithMultipleFilters()    
+
+}
+
+<script>
+
+    $(document).ready(function () {
+        //Variable to determine if unload request is GET or POST
+        var isPost = false;
+
+        //Convert a GET request to a form POST - To enable grid filtering to integrate with page logic
+        $(window).bind("onbeforeunload", function () {
+            if (!isPost) {
+                FormSubmit(window.location.search, "inventoryForm", false);
+            }
+        });
+
+        //Set grid sort links to be passed to FormPost function
+        $(".grid-header-title a").each(function () {
+            var sortQS = $(this).attr("href");
+            $(this).attr("href", "javascript:FormSubmit('/Inventory" + sortQS + "', 'inventoryForm', false)");
+        });
+        //Set grid pagination links to be passed to FormPost function
+        $(".pagination a").each(function () {
+            var pageQS = $(this).attr("href");
+            $(this).attr("href", "javascript:FormSubmit('/Inventory" + pageQS + "', 'inventoryForm', false)");
+        });
+        //Set grid filtering to pass through FormPost function
+        $(".grid-mvc").each(function () {
+            $(this).attr("data-formpost", "inventoryForm");
+        });
+    });
+
+    $('#editModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var itemID = button.data('item');
+        var sku = button.data('sku');
+        var brand = button.data('brand');
+        var description = button.data('desc');
+        var currQty = button.data('currqty');
+        var maxQty = button.data('maxqty');
+        var orderThresh = button.data('thresh');
+        var unitCost = parseFloat(button.data('cost'));
+        var retailPrice = parseFloat(button.data('retail'));
+        var modal = $(this);
+        modal.find('#editItemID').val(itemID);
+        modal.find('#editSKU').val(sku);
+        modal.find('#editBrand').val(brand);
+        modal.find('#editDescription').val(description);
+        modal.find('#editCurrentQty').val(currQty);
+        modal.find('#editMaxQty').val(maxQty);
+        modal.find('#editOrderThreshold').val(orderThresh);
+        modal.find('#editUnitCost').val(unitCost.toFixed(2));
+        modal.find('#editRetailPrice').val(retailPrice.toFixed(2));
+    });
+
+    $('#deleteModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var itemID = button.data('item');
+        var sku = button.data('sku');
+        var brand = button.data('brand');
+        var description = button.data('desc');
+        var modal = $(this);
+        modal.find('#deleteItemID').val(itemID);
+        modal.find('#deleteSKU').html(sku);
+        modal.find('#deleteBrand').html(brand);
+        modal.find('#deleteDescription').html(description);
+    });
+
+</script>
+
+
+
+

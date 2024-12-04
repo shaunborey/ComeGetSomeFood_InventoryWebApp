@@ -1,0 +1,5 @@
+c:\users\shaun\documents\visual studio 2013\Projects\CGSFEntityLib\CGSFEntityLib\bin\Debug\CGSFEntityLib.dll
+c:\users\shaun\documents\visual studio 2013\Projects\CGSFEntityLib\CGSFEntityLib\bin\Debug\CGSFEntityLib.pdb
+c:\users\shaun\documents\visual studio 2013\Projects\CGSFEntityLib\CGSFEntityLib\obj\Debug\CGSFEntityLib.dll
+c:\users\shaun\documents\visual studio 2013\Projects\CGSFEntityLib\CGSFEntityLib\obj\Debug\CGSFEntityLib.pdb
+C:\Users\Shaun\Documents\Visual Studio 2013\Projects\CGSFEntityLib\CGSFEntityLib\obj\Debug\CGSFEntityLib.csprojResolveAssemblyReference.cache

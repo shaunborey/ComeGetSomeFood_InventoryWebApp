@@ -1,0 +1,50 @@
+﻿@model CGSF_InventoryWebApp.Models.UserModel
+
+@using (Html.BeginForm("Index", "Home", FormMethod.Post, new { id = "newuserForm" }))
+{
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Add User</h3>
+            <span class="danger">@Model.Message</span>
+        </div>
+        <div class="modal-body modalForm">
+
+            <h4>Enter Login Information:</h4>
+            <div>
+                @Html.LabelFor(model => model.NewUser.UserName)
+                @Html.TextBoxFor(model => model.NewUser.UserName, new { required = "required" })
+            </div>
+            <div>
+                @Html.LabelFor(model => model.NewUser.Password)
+                @Html.TextBoxFor(model => model.NewUser.Password, new { type = "password" })
+            </div>
+            <div>
+                @Html.LabelFor(model => model.ConfirmPassword)
+                @Html.TextBoxFor(model => model.ConfirmPassword, new { type = "password" })
+            </div>
+            <div>
+                @Html.LabelFor(model => model.NewUser.Type)
+                @Html.EnumDropDownListFor(model => model.NewUser.Type)
+            </div>
+            <div>
+                @Html.LabelFor(model => model.NewUser.FirstName)
+                @Html.TextBoxFor(model => model.NewUser.FirstName, new { required = "required" })
+            </div>
+            <div>
+                @Html.LabelFor(model => model.NewUser.LastName)
+                @Html.TextBoxFor(model => model.NewUser.LastName, new { required = "required" })
+            </div>
+            <div>
+                @Html.LabelFor(model => model.NewUser.EmailAddress)
+                @Html.TextBoxFor(model => model.NewUser.EmailAddress, new { type = "email", required = "required" })
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#" class="btn btn-danger btn-sm" data-dismiss="modal">CANCEL</a>
+            <button class="btn btn-success btn-sm" onclick="FormSubmit('/ProcessUser/AddUser', 'newuserForm', true)">SUBMIT</button>
+            <button id="newuserFormSubmit" type="submit" hidden="hidden"></button>
+        </div>
+    </div>
+</div>
+}
